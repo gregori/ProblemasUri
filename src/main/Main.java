@@ -5,6 +5,8 @@
  */
 package main;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import uri1042.Uri1042;
 
 /**
@@ -16,15 +18,16 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         if (args.length == 0) {
             System.out.println("Passe o número de um problema.");
         } else {
-            switch (args[0]) {
-                case "1042":
-                    Uri1042.run();
-                    break;
-            }
+            // Executa classe conforme o nome passado por parâmetro
+            // classes têm que ter o formato: uriNoProjeto.UriNoProjeto
+            // por exemplo: uri1042.Uri1042
+            Class clazz = Class.forName("uri" + args[0] + ".Uri" + args[0]);
+            Method method = clazz.getMethod("run");
+            method.invoke(null);
         }
     }
     
